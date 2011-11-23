@@ -82,7 +82,9 @@ client.sockets.on('event:submitAnswer', function(socketId, data){
     sendNewQuestion()
     sendToAdmin('newQuestion', questionData)
     console.log('CORRECT! sending everyone a new question!');
-  } 
+  } else {
+    console.log('DUNCE!!! INCORRECT ANSWER!!');
+  }
 })
 
 // admin moving to new question
