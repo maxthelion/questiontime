@@ -43,6 +43,13 @@ $().ready(function(){
 		});
 	}
 
+  pusher.back_channel.bind('question-win', function(data){
+    $('.submitted').css('background', 'green')
+  })
+  
+  pusher.back_channel.bind('question-lose', function(data){
+    $('.submitted').css('background', 'red')
+  })
 })
 
 var GameScreen = function(el, player){

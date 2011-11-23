@@ -39,8 +39,10 @@ function sendNewQuestion(){
   for (i in activeUsers) {
     client.socket(i).trigger('newQuestion', questionData)
   };
+  sendToAdmin('newQuestion', questionData)
 }
 
+// helper function to send the admin a message
 function sendToAdmin(eventName, data){
   if (admin) {
     client.socket(admin).trigger(eventName, data)
@@ -78,11 +80,14 @@ client.sockets.on('event:submitAnswer', function(socketId, data){
   console.log(activeUsers[socketId].name +' answered '+ data.answer);
   if (data.answer == correctAnswer){
     activeUsers[socketId].score++
+    client.socket(socketId).trigger('question-win', {msg: "You win the round, winner!!!"})
     sendToAdmin('winner', activeUsers)
-    sendNewQuestion()
-    sendToAdmin('newQuestion', questionData)
-    console.log('CORRECT! sending everyone a new question!');
+    setTimeout(function(){
+      console.log('CORRECT! sending everyone a new question!');
+      sendNewQuestion()
+    }, 1000)
   } else {
+    client.socket(socketId).trigger('question-lose', {msg: "DUnCe!!!"})
     console.log('DUNCE!!! INCORRECT ANSWER!!');
   }
 })
