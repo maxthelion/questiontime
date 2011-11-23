@@ -2,10 +2,11 @@ Pusher.host = "ws.darling.pusher.com"
 Pusher.log = function(message) {
     if (window.console && window.console.log) window.console.log(message);
 };
-var pusher = new Pusher('2b4dbdeb570fc373332f')
 
+var pusher = null;
 
 function startGame(playerName){
+  pusher = new Pusher('2b4dbdeb570fc373332f');
   pusher.connection.bind('connected', function(){
     player = new Player( playerName );
 
@@ -22,8 +23,7 @@ function startGame(playerName){
   })
 }
 
-var Player = function(name) {
-}
+var Player = function(name) {}
 
 $().ready(function(){
 	if (localStorage['playerName'] != undefined){
@@ -35,19 +35,19 @@ $().ready(function(){
 		  playerName = $('#playerNameInput').val()
 		  if (playerName == ""){
 		    alert("enter a name");
-		    return false 
+		    return false
 		  }
-			localStorage['playerName'] = playerName;
-      startGame(playerName)
-			return false;
+		  localStorage['playerName'] = playerName;
+          startGame(playerName)
+		  return false;
 		});
 	}
-	
+
 })
 
 var GameScreen = function(el, player){
   var self = this;
-  
+
   this.populate = function(data){
     $('#controls').show()
     $('#waiting').hide()
@@ -63,7 +63,7 @@ var GameScreen = function(el, player){
       $('#questionList').append(answerEl);
     };
   };
-  
+
   var submitQuestion = function(answer){
     $('#questionList').empty()
     pusher.back_channel.trigger('submitAnswer', {answer: answer})
