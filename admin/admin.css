@@ -6,3 +6,16 @@ body {
   font-family: arial;
   text-align: center;
 }
+
+#participantList p {
+  background: cyan;
+  font-size: 3em;
+  padding: 10px;
+}
+
+#question {
+  background: black;
+  font-size: 4em;
+  padding: 1em;
+  color: white;
+}

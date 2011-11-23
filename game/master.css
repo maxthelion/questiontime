@@ -7,12 +7,23 @@ body {
   text-align: center;
 }
 
-#question {
-  font-size: 2em;
+.questionCont {
+  background: black;
+  color: white;
+  font-size: 4em;
+  padding: 1em;
 }
 
 #questionList li {
   padding: 10px;
   background: yellow;
   margin: 10px;
+  font-size: 2em;
+}
+#questionList li:hover {
+  background: orange;
+}
+
+#questionList li.submitted {
+  background: #ddd;
 }

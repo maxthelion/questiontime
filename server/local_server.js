@@ -24,7 +24,7 @@ function generateQuestion(){
 }
 
 function sendNewQuestion(){
-  var questionData = generateQuestion()
+  questionData = generateQuestion()
   for (i in activeUsers) {
     client.socket(i).trigger('newQuestion', questionData)
   };
@@ -41,9 +41,11 @@ client.subscribe(['socket_message', 'socket_existence'])
 var activeUsers = {}
 var currentQuestion = null;
 var admin = null
+var questionData = generateQuestion();
 
 client.sockets.on('close', function(socketId) {
   delete activeUsers[socketId];
+  sendToAdmin('playerList', activeUsers)
 });
 
 // new player registering
@@ -53,6 +55,9 @@ client.sockets.on('event:register', function(socketId, data){
     name: data.name,
     score: 0
   }
+  if (questionData != null){
+    client.socket(socketId).trigger('newQuestion', questionData)
+  }
   sendToAdmin('newPlayer', activeUsers[socketId])
 })
 
@@ -60,16 +65,20 @@ client.sockets.on('event:submitAnswer', function(socketId, data){
   if (data.answer == correctAnswer){
     activeUsers[socketId].score++
     sendToAdmin('winner', activeUsers)
-    console.log( activeUsers )
     sendNewQuestion()
-  }
+    sendToAdmin('newQuestion', questionData)
+  } 
 })
 
 // admin starting the game
+client.sockets.on('event:next', function(socketId, data){
+  sendNewQuestion()
+})
+
 client.sockets.on('event:start', function(socketId, data){
   admin = socketId
   sendToAdmin('playerList', activeUsers)
-  sendNewQuestion()
+  sendToAdmin('newQuestion', questionData)
 })
 
 client.connect();
