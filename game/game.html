@@ -1,0 +1,31 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="http://js.pusherapp.com/1.10.0-pre/pusher.min.js"></script>
+  <script src="game.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="master.css" type="text/css" media="screen">
+  <title>Uber quiz</title>
+</head>
+
+<body>
+  <div id="enterName">
+    <h1>Enter your name to start playing</h1>
+    
+    <form id="nameForm" action="#">
+      <input id="playerNameInput">
+      <button>Play</button>
+    </form>
+  </div>
+  <div id="questions">
+    <h1>Game screen</h1>
+    
+    <div id="waiting">Waiting to play</div>
+    
+    <div id="controls">
+    <p id="question"></p>
+    <ul id="questionList"></ul>
+    </div>
+      
+  </div>
+</body>
+</html>

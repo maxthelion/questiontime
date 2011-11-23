@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: arial;
+  text-align: center;
+}
+
+#question {
+  font-size: 2em;
+}
+
+#questionList li {
+  padding: 10px;
+  background: yellow;
+  margin: 10px;
+}
